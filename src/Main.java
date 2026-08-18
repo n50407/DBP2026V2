@@ -6,10 +6,130 @@ import java.sql.*;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+
+    //
+    //SELECT ID, Bezeichnung, Preis, Bewertung
+    //FROM Produkte ;
+    public static void AlleProdukteausgebenTeurerAls(float minPreis){
+        Connection con = null;
+        try
+        {
+            String connectionStringURL="jdbc:sqlite:C:/LVs/DBP2026/Produktverwaltung.db";
+            con =DriverManager.getConnection(connectionStringURL);
+
+            Statement stmt = con.createStatement();
+            String selectProdukte="SELECT 17+2 AS Rechnung,  ID Nummer, Bezeichnung, Preis, Bewertung FROM Produkte ";
+            selectProdukte += " where preis > " + minPreis + " and preis not null ";
+            selectProdukte += " ORDER BY Preis DESC;";
+
+            ResultSet rs = stmt.executeQuery(selectProdukte);
+
+            while ( rs.next() ){
+                int id = rs.getInt("Nummer");
+                String bezeichnung=rs.getString("Bezeichnung");
+                int bewertung = rs.getInt("Bewertung");
+                float preis = rs.getFloat("Preis");
+                if ( rs.wasNull() )
+                    System.out.println( "Preis ist SQL-NULL" );
+
+                System.out.printf( "%d, %s %f %d %n", id, bezeichnung, preis,bewertung);
+            }
+            rs.close();
+            stmt.close();
+        }
+        catch ( SQLException e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if ( con != null )
+                try { con.close(); } catch ( SQLException e ) { e.printStackTrace(); }
+        }
+    }
+
+    public static void AlleProdukteausgebenTeurerAlsPreparedStmt(float minPreis){
+        Connection con = null;
+        try
+        {
+            String connectionStringURL="jdbc:sqlite:C:/LVs/DBP2026/Produktverwaltung.db";
+            con =DriverManager.getConnection(connectionStringURL);
+
+
+            String selectProdukte="SELECT 17+2 AS Rechnung,  ID Nummer, Bezeichnung, Preis, Bewertung FROM Produkte ";
+            selectProdukte += " where preis > ? and preis not null ";
+            selectProdukte += " ORDER BY Preis DESC;";
+
+            PreparedStatement stmt = con.prepareStatement(selectProdukte);
+            stmt.setFloat(1,minPreis);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while ( rs.next() ){
+                int id = rs.getInt("Nummer");
+                String bezeichnung=rs.getString("Bezeichnung");
+                int bewertung = rs.getInt("Bewertung");
+                float preis = rs.getFloat("Preis");
+                if ( rs.wasNull() )
+                    System.out.println( "Preis ist SQL-NULL" );
+
+                System.out.printf( "%d, %s %f %d %n", id, bezeichnung, preis,bewertung);
+            }
+            rs.close();
+            stmt.close();
+        }
+        catch ( SQLException e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if ( con != null )
+                try { con.close(); } catch ( SQLException e ) { e.printStackTrace(); }
+        }
+    }
+    public static void AlleProdukteausgeben(){
+        Connection con = null;
+        try
+        {
+            String connectionStringURL="jdbc:sqlite:C:/LVs/DBP2026/Produktverwaltung.db";
+            con =DriverManager.getConnection(connectionStringURL);
+
+            Statement stmt = con.createStatement();
+            String selectProdukte="SELECT 17+2 AS Rechnung,  ID Nummer, Bezeichnung, Preis, Bewertung FROM Produkte ORDER BY Preis DESC;";
+
+            ResultSet rs = stmt.executeQuery(selectProdukte);
+
+            while ( rs.next() ){
+                int id = rs.getInt("Nummer");
+                String bezeichnung=rs.getString("Bezeichnung");
+                int bewertung = rs.getInt("Bewertung");
+                float preis = rs.getFloat("Preis");
+                if ( rs.wasNull() )
+                    System.out.println( "Preis ist SQL-NULL" );
+
+                System.out.printf( "%d, %s %f %d %n", id, bezeichnung, preis,bewertung);
+            }
+            rs.close();
+            stmt.close();
+        }
+        catch ( SQLException e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if ( con != null )
+                try { con.close(); } catch ( SQLException e ) { e.printStackTrace(); }
+        }
+    }
     public static void main(String[] args) {
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
         // to see how IntelliJ IDEA suggests fixing it.
         System.out.printf("Hallo Campus02\n");
+        //AlleProdukteausgeben();
+        //AlleProdukteausgebenTeurerAls(100);
+        AlleProdukteausgebenTeurerAlsPreparedStmt(100);
     }
     public static void mainOld(String[] args) {
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
