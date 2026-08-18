@@ -36,6 +36,25 @@ Aufgabe 18.08.2026 - 08:45
 
    Auflösung 10:40 Uhr
    
+6. Aufgabe 18.08.2026 - 11:10 -
+NeueDB,
+CreateTableStudents - neueTabelle Studierende (ID, Vorname, Matrikelnummer, Studienfach
+CRUD - CREATE READ UPDATE DELETE
+InsertStudent, UpdateStudent, DeleteStuden, ReadAllStudents, ReadStudentsFilterByStudienfach, ReadStundestMitVornameFilter
+
+"Objektorientiert"
+Student newStudent =new Student();
+newStudent.setVorname("Maria");
+InsertStudent(newStudent);
+UpdateStudent(student); -- Update anhand Id
+"Refactoring" --- StudentDBHelper-Klasse helper.InsertStuden, helper.ReadallStudens,.... 
+
+
+
+
+
+
+
 
    
 
