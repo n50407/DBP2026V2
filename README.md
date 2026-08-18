@@ -18,4 +18,11 @@ JDBC - Java Database Connectivity (Interface Connection, Statement, ResultSet
    4. "SELECT Vorname FROM Kunden" ---> executeQuery --> ResultSet (Cursur - next())
    5. "UPDATE ...", "CREATE TABLE ...", "DELETE ..." ---> executeUpdate
    6. Resource-Handling - AutoCloseable -- .close(); 
-2. 
+
+Aufgabe 18.08.2026 - 08:45
+1. SQLite Studio eine neue DB (Producktverwaltung) + 1 Tabelle Produkte (ID (PK), Bezeichnung, Preis, Bewertung (0-10))
+2. 3 bis 5 Beispieldatensätze direkt in SQL Lite INSERT INTO
+3. IntelliJ - AlleProdukteAusgeben (Connection - DriverManager, Statement - ExecuteQuery, ResultSet, next() + printf, AutoCloseable .close)
+4. Auflösung 09:40 Uhr 
+
+
