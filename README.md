@@ -49,6 +49,8 @@ InsertStudent(newStudent);
 UpdateStudent(student); -- Update anhand Id
 "Refactoring" --- StudentDBHelper-Klasse helper.InsertStuden, helper.ReadallStudens,.... 
 
+Zeitschätzung: 1 Stunde bis 1,5 Stunden Aufgabe umsetzen, 30 Minuten Pause, Auflösung: 13:30 Uhr 
+
 
 
 
