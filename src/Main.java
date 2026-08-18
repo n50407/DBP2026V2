@@ -88,6 +88,83 @@ public class Main {
                 try { con.close(); } catch ( SQLException e ) { e.printStackTrace(); }
         }
     }
+
+    public static void UpdateProdukt(int id, float neuerPreis){
+        Connection con = null;
+        try
+        {
+            String connectionStringURL="jdbc:sqlite:C:/LVs/DBP2026/Produktverwaltung.db";
+            con =DriverManager.getConnection(connectionStringURL);
+
+            String updateProdukte="UPDATE Produkte SET Preis = ? WHERE ID = ? ";
+            PreparedStatement stmt = con.prepareStatement(updateProdukte);
+            stmt.setFloat(1,neuerPreis);
+            stmt.setInt(2,id);
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected==1){
+                System.out.println("Produkt wurde erfolgreich geändert");
+            } else {
+                System.out.println("Produkt wurde nicht gefunden");
+            }
+
+            stmt.close();
+        }
+        catch ( SQLException e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if ( con != null )
+                try { con.close(); } catch ( SQLException e ) { e.printStackTrace(); }
+        }
+    }
+
+    public static int InsertProdukt(String bezeichnung, float preis, int bewertung){
+        Connection con = null;
+        int identityValue=0;
+        try
+        {
+            String connectionStringURL="jdbc:sqlite:C:/LVs/DBP2026/Produktverwaltung.db";
+            con =DriverManager.getConnection(connectionStringURL);
+
+            String insterProdukte =" INSERT INTO Produkte(Bezeichnung,Preis,Bewertung) VALUES(?,?,?); ";
+            PreparedStatement stmt = con.prepareStatement(insterProdukte, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1,bezeichnung);
+            stmt.setFloat(2,preis);
+            stmt.setInt(3,bewertung);
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected==1){
+                System.out.println("Produkt wurde erfolgreich hinzugefügt");
+            } else {
+                System.out.println("Produkt wurde nicht hinzugefügt");
+            }
+
+            ResultSet rs = stmt.getGeneratedKeys(); // DO NOT wrap this in try-with-resources
+            if (rs.next()) {
+                identityValue = rs.getInt(1);
+                rs.close();
+            } else {
+                rs.close();
+            }
+
+            //Autowert auslesen
+            stmt.close();
+        }
+        catch ( SQLException e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if ( con != null )
+                try { con.close(); } catch ( SQLException e ) { e.printStackTrace(); }
+        }
+
+        return  identityValue;
+    }
     public static void AlleProdukteausgeben(){
         Connection con = null;
         try
@@ -129,7 +206,10 @@ public class Main {
         System.out.printf("Hallo Campus02\n");
         //AlleProdukteausgeben();
         //AlleProdukteausgebenTeurerAls(100);
-        AlleProdukteausgebenTeurerAlsPreparedStmt(100);
+       // AlleProdukteausgebenTeurerAlsPreparedStmt(100);
+        //UpdateProdukt(12,70);
+        int autoWert= InsertProdukt("Batterie",12,4);
+        System.out.println("Produkt mit der id " + autoWert + " wurde erstellt");
     }
     public static void mainOld(String[] args) {
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
