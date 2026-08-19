@@ -1,4 +1,4 @@
-package at.campus02;
+
 
 import java.io.PrintWriter;
 import java.sql.*;
@@ -14,15 +14,33 @@ public class Main {
         Connection con = null;
         try
         {
-            String connectionStringURL="jdbc:sqlite:C:/LVs/DBP2026/Produktverwaltung.db";
+            String connectionStringURL="jdbc:sqlite:C:/LVs/DBP2026/UrlaubsplanungSQLiteDB.db";
             con =DriverManager.getConnection(connectionStringURL);
 
             Statement stmt = con.createStatement();
             String selectProdukte="SELECT 17+2 AS Rechnung,  ID Nummer, Bezeichnung, Preis, Bewertung FROM Produkte ";
-            selectProdukte += " where preis > " + minPreis + " and preis not null ";
-            selectProdukte += " ORDER BY Preis DESC;";
+            selectProdukte="SELECT k.Id, k.Vorname, a.Bezeichnung\n" +
+                    "FROM Kunden k LEFT OUTER JOIN KundenArten a\n" +
+                    "ON k.ArtID_FK = a.ArtID";
+           // String selectProdukte="SELECT * FROM Produkte ";
+            //selectProdukte += " where preis > " + minPreis + " and preis not null ";
+            //selectProdukte += " ORDER BY Preis DESC;";
 
             ResultSet rs = stmt.executeQuery(selectProdukte);
+
+            ResultSetMetaData meta = rs.getMetaData();
+
+            int numerics = 0;
+
+            for ( int i = 1; i <= meta.getColumnCount(); i++ )
+            {
+                System.out.printf( "%-20s %-20s%n", meta.getColumnLabel( i ),
+                        meta.getColumnTypeName( i ) );
+
+                if ( meta.isSigned( i ) )
+                    numerics++;
+            }
+
 
             while ( rs.next() ){
                 int id = rs.getInt("Nummer");
@@ -46,6 +64,12 @@ public class Main {
             if ( con != null )
                 try { con.close(); } catch ( SQLException e ) { e.printStackTrace(); }
         }
+    }
+
+    public static void Studentsample(){
+        int i=12;
+Student s1=new Student();
+
     }
 
     public static void AlleProdukteausgebenTeurerAlsPreparedStmt(float minPreis){
@@ -96,12 +120,16 @@ public class Main {
             String connectionStringURL="jdbc:sqlite:C:/LVs/DBP2026/Produktverwaltung.db";
             con =DriverManager.getConnection(connectionStringURL);
 
+            con.setAutoCommit( false );
             String updateProdukte="UPDATE Produkte SET Preis = ? WHERE ID = ? ";
             PreparedStatement stmt = con.prepareStatement(updateProdukte);
             stmt.setFloat(1,neuerPreis);
             stmt.setInt(2,id);
 
-            int rowsAffected = stmt.executeUpdate();
+            int rowsAffected = stmt.executeUpdate(); //Default BEGIN TRANSACTION - anschließen COMMIT TRANSACTION
+            con.commit();
+            //con.rollback();
+            con.setAutoCommit( true );
             if (rowsAffected==1){
                 System.out.println("Produkt wurde erfolgreich geändert");
             } else {
@@ -205,11 +233,11 @@ public class Main {
         // to see how IntelliJ IDEA suggests fixing it.
         System.out.printf("Hallo Campus02\n");
         //AlleProdukteausgeben();
-        //AlleProdukteausgebenTeurerAls(100);
+        AlleProdukteausgebenTeurerAls(100);
        // AlleProdukteausgebenTeurerAlsPreparedStmt(100);
         //UpdateProdukt(12,70);
-        int autoWert= InsertProdukt("Batterie",12,4);
-        System.out.println("Produkt mit der id " + autoWert + " wurde erstellt");
+       // int autoWert= InsertProdukt("Batterie",12,4);
+        //System.out.println("Produkt mit der id " + autoWert + " wurde erstellt");
     }
     public static void mainOld(String[] args) {
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
