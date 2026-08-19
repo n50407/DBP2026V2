@@ -36,6 +36,38 @@ Aufgabe 18.08.2026 - 08:45
 
    Auflösung 10:40 Uhr
    
+6. Aufgabe 18.08.2026 - 11:10 -
+NeueDB,
+CreateTableStudents - neueTabelle Studierende (ID, Vorname, Matrikelnummer, Studienfach
+CRUD - CREATE READ UPDATE DELETE
+InsertStudent, UpdateStudent, DeleteStuden, ReadAllStudents, ReadStudentsFilterByStudienfach, ReadStundestMitVornameFilter
+
+"Objektorientiert"
+Student newStudent =new Student();
+newStudent.setVorname("Maria");
+InsertStudent(newStudent);
+UpdateStudent(student); -- Update anhand Id
+"Refactoring" --- StudentDBHelper-Klasse helper.InsertStuden, helper.ReadallStudens,.... 
+
+Zeitschätzung: 1 Stunde bis 1,5 Stunden Aufgabe umsetzen, 30 Minuten Pause, Auflösung: 13:45 Uhr 
+
+
+6. Aufgabe 19.08.2026 - 09:00 -
+//Eine zusätzliche "Abhängige Tabelle" definieren - Foreign Key (1:n, n:1, m:n
+// StudierenendenID Vorname Fach FK_FH         1   Campus02
+                                 2               2  FH BFI Wien
+                                  7
+   - ReadAllInfosFromBothTables --- JOIN (Inner, Outer)?
+  
+   - Dazu bitte auch die Metadaten ausgeben (Spalten, Datentypen)
+   - Auflösung 09:45 Uhr 
+  
+7. 
+
+
+
+
+
 
    
 
