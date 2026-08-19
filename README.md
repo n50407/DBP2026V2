@@ -52,6 +52,17 @@ UpdateStudent(student); -- Update anhand Id
 Zeitschätzung: 1 Stunde bis 1,5 Stunden Aufgabe umsetzen, 30 Minuten Pause, Auflösung: 13:45 Uhr 
 
 
+6. Aufgabe 19.08.2026 - 09:00 -
+//Eine zusätzliche "Abhängige Tabelle" definieren - Foreign Key (1:n, n:1, m:n
+// StudierenendenID Vorname Fach FK_FH         1   Campus02
+                                 2               2  FH BFI Wien
+                                  7
+   - ReadAllInfosFromBothTables --- JOIN (Inner, Outer)?
+  
+   - Dazu bitte auch die Metadaten ausgeben (Spalten, Datentypen)
+   - Auflösung 09:45 Uhr 
+  
+7. 
 
 
 
