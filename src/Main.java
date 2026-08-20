@@ -1,5 +1,6 @@
 
 
+import PVorbereitung.GeschlechtPunkteTuple;
 import PVorbereitung.Kunde;
 import PVorbereitung.VorbereitungDBHelper;
 
@@ -246,16 +247,26 @@ Student s1=new Student();
         Kunde kSuche = helper.getKundeById(kNeu.getKDNR());
         System.out.println(kSuche);
 
-        List<Kunde> alleKunden = helper.getKunden();
+        List<Kunde> alleKunden = helper.getAlleKunden();
         System.out.println(alleKunden);
        kSuche.setNachname(kSuche.getNachname() + "geändert");
        kSuche.setBonuspunkte(kSuche.getBonuspunkte()+5);
+       //Geschlecht = Mann
        helper.updateKunde(kSuche);
 
-        helper.transferPoints(1,2,7);
+        helper.transferPointsWithTransaction(1,2,7);
+
+
+
+        Kunde kMax = helper.getKundeMaxBonuspunkte();
+        System.out.println("KMAx");
+        System.out.println(kMax);
+
+        List<GeschlechtPunkteTuple> avgGeschlechtPunkte = helper.getAvgGeschlechtPunkte();
+        System.out.println("AVG");
+        System.out.println(avgGeschlechtPunkte);
 
         helper.closeConnection();
-
 
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
         // to see how IntelliJ IDEA suggests fixing it.

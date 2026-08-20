@@ -108,7 +108,7 @@ public class VorbereitungDBHelper {
         return k;
     }
 
-    public List<Kunde> getKunden() {
+    public List<Kunde> getAlleKunden() {
         List<Kunde> kunden = new ArrayList<>();
         String sql = "SELECT KDNR FROM Kunden";
         try (Statement stmt = con.createStatement();
@@ -145,7 +145,7 @@ public class VorbereitungDBHelper {
         }
         return 0;
     }
-    public void transferPoints(int kdnrVon, int kdnrAn, int punkte) {
+    public void transferPointsWithTransaction(int kdnrVon, int kdnrAn, int punkte) {
         try {
             Kunde von = getKundeById(kdnrVon);
             Kunde an = getKundeById(kdnrAn);
@@ -166,4 +166,34 @@ public class VorbereitungDBHelper {
         }
     }
 
+    public Kunde getKundeMaxBonuspunkte() {
+        Kunde kMaxBonus=null;
+        String sql = "SELECT KDNR FROM Kunden ORDER BY Bonuspunkte DESC LIMIT 1";
+        try (Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+               kMaxBonus= getKundeById(rs.getInt("KDNR"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return kMaxBonus;
+    }
+
+    public List<GeschlechtPunkteTuple> getAvgGeschlechtPunkte() {
+        List<GeschlechtPunkteTuple> geschlechtPunkte = new ArrayList<>();
+        String sql = "SELECT Geschlecht, AVG(bonuspunkte) FROM Kunden group by geschlecht";
+        try (Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                geschlechtPunkte.add(
+                        new GeschlechtPunkteTuple(rs.getString("Geschlecht"),rs.getDouble(2))
+                );
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return geschlechtPunkte;
+    }
 }
