@@ -1,7 +1,12 @@
 
 
+import PVorbereitung.Kunde;
+import PVorbereitung.VorbereitungDBHelper;
+
 import java.io.PrintWriter;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -229,11 +234,34 @@ Student s1=new Student();
         }
     }
     public static void main(String[] args) {
+
+        System.out.printf("Willkommen zur Prüfungsvorbereitung\n");
+
+        VorbereitungDBHelper helper =new VorbereitungDBHelper();
+        helper.openConnection();
+       // helper.createTables();
+        Kunde kNeu =new Kunde(-1,"Kurt","Mayer","Mann",40);
+        helper.insertKunde(kNeu);
+
+        Kunde kSuche = helper.getKundeById(kNeu.getKDNR());
+        System.out.println(kSuche);
+
+        List<Kunde> alleKunden = helper.getKunden();
+        System.out.println(alleKunden);
+       kSuche.setNachname(kSuche.getNachname() + "geändert");
+       kSuche.setBonuspunkte(kSuche.getBonuspunkte()+5);
+       helper.updateKunde(kSuche);
+
+        helper.transferPoints(1,2,7);
+
+        helper.closeConnection();
+
+
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
         // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hallo Campus02\n");
+        //System.out.printf("Hallo Campus02\n");
         //AlleProdukteausgeben();
-        AlleProdukteausgebenTeurerAls(100);
+       // AlleProdukteausgebenTeurerAls(100);
        // AlleProdukteausgebenTeurerAlsPreparedStmt(100);
         //UpdateProdukt(12,70);
        // int autoWert= InsertProdukt("Batterie",12,4);
